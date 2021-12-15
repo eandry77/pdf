@@ -82,14 +82,20 @@ class PluginPdfTicketTask extends PluginPdfCommon {
          }
          //$pdf->displayTitle($title);
 
+	$pdf->displayLine('<DIV ALIGN="CENTER"><font size="7"><b>LISTE DES INTERVENTIONS</b></font></DIV>');
+	$pdf->displayspace();
+
          //$pdf->setColumnsSize(20,20,20,20,20);
 		 $pdf->setColumnsSize(25,25,50);
          //$pdf->displayTitle("<i>".__('Type'), __('Date'), __('Duration'), __('Writer'),__('Planning')."</i>");
-		 $pdf->displayTitle("<i>".__('Type'), __('Duration'),__('Planning')."</i>");
 
 
          $tot = 0;
          while (($data = $result->next()) && ($tot < $_SESSION['glpilist_limit'])) {
+
+	    //Affiche les tires de colonne pour chaque tâche
+	     $pdf->displayTitle("<i>".__('Type'), __('Duration'),__('Planning')."</i>");
+
 
             $actiontime = Html::timestampToString($data['actiontime'], false);
             $planification = '';
