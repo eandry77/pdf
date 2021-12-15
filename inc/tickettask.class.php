@@ -70,7 +70,7 @@ class PluginPdfTicketTask extends PluginPdfCommon {
       $number = count($result);
 
       $pdf->setColumnsSize(100);
-      $title = '<b>'.TicketTask::getTypeName($number).'</b>';
+      //$title = '<b>'.TicketTask::getTypeName($number).'</b>';
 
       if (!$number) {
          $pdf->displayTitle(sprintf(__('%1$s: %2$s'), $title, __('No item to display')));
@@ -80,11 +80,12 @@ class PluginPdfTicketTask extends PluginPdfCommon {
          } else {
             $title = sprintf(__('%1$s: %2$s'), $title, $number);
          }
-         $pdf->displayTitle($title);
+         //$pdf->displayTitle($title);
 
-         $pdf->setColumnsSize(20,20,20,20,20);
-         $pdf->displayTitle("<i>".__('Type'), __('Date'), __('Duration'), __('Writer'),
-               __('Planning')."</i>");
+         //$pdf->setColumnsSize(20,20,20,20,20);
+		 $pdf->setColumnsSize(25,25,50);
+         //$pdf->displayTitle("<i>".__('Type'), __('Date'), __('Duration'), __('Writer'),__('Planning')."</i>");
+		 $pdf->displayTitle("<i>".__('Type'), __('Duration'),__('Planning')."</i>");
 
 
          $tot = 0;
@@ -92,10 +93,10 @@ class PluginPdfTicketTask extends PluginPdfCommon {
 
             $actiontime = Html::timestampToString($data['actiontime'], false);
             $planification = '';
-            if (isset($data["state"])) {
-               $planification = sprintf(__('%1$s: %2$s'), _x('item', 'State'),
-                                           Planning::getState($data["state"]));
-            }
+            //if (isset($data["state"])) {
+            //   $planification = sprintf(__('%1$s: %2$s'), _x('item', 'State'),
+            //                               Planning::getState($data["state"]));
+            //}
             if (!empty($data['begin'])) {
                $planification .= "<br>".sprintf(__('%1$s: %2$s'), __('Begin'),
                                                 Html::convDateTime($data["begin"]));
@@ -106,11 +107,11 @@ class PluginPdfTicketTask extends PluginPdfCommon {
                $planification .= "<br>".sprintf(__('%1$s: %2$s'), __('By user', 'pdf'),
                                                 $dbu->getUserName($data["users_id_tech"]));
             }
-            if ($data['groups_id_tech'] > 0) {
-               $planification .= "<br>".sprintf(__('%1$s: %2$s'), __('By group', 'pdf'),
-                                                Dropdown::getDropdownName('glpi_groups',
-                                                                            $data["groups_id_tech"]));
-            }
+            // if ($data['groups_id_tech'] > 0) {
+               // $planification .= "<br>".sprintf(__('%1$s: %2$s'), __('By group', 'pdf'),
+                                                // Dropdown::getDropdownName('glpi_groups',
+                                                                            // $data["groups_id_tech"]));
+            // }
             if ($data['taskcategories_id']) {
                $lib = Dropdown::getDropdownName('glpi_taskcategories',  $data['taskcategories_id']);
             } else {
@@ -121,13 +122,14 @@ class PluginPdfTicketTask extends PluginPdfCommon {
             }
 
             $pdf->displayLine("</b>".Html::clean($lib),
-                              Html::convDateTime($data["date"]),
+                              //Html::convDateTime($data["date"]),
                               Html::timestampToString($data["actiontime"], 0),
-                              Html::clean($dbu->getUserName($data["users_id"])),
+                              //Html::clean($dbu->getUserName($data["users_id"])),
                               $planification);
             $pdf->displayText("<b><i>".sprintf(__('%1$s: %2$s')."</i></b>", __('Description'), ''),
                                                $data["content"], 1);
             $tot++;
+			$pdf->displaySpace();
          }
       }
 
