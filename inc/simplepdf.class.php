@@ -32,6 +32,38 @@
 
 define ('K_PATH_IMAGES', Plugin::getPhpDir('pdf').'/pics/');
 
+// modif de classe pour pouvoir customiser le footer
+class MYPDF extends TCPDF {
+
+    //Page header
+    //public function Header() {
+        // Logo
+    //    $image_file = K_PATH_IMAGES.'logo_example.jpg';
+    //    $this->Image($image_file, 10, 10, 15, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        // Set font
+    //    $this->SetFont('helvetica', 'B', 20);
+        // Title
+    //    $this->Cell(0, 15, '<< TCPDF Example 003 >>', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+    // }
+
+    // Page footer
+    public function Footer() {
+        // Position at 15 mm from bottom
+        $this->SetY(-35);
+        // Set font
+        $this->SetFont('helvetica', 'I', 8);
+		$html =  '<DIV ALIGN="CENTER"><p style="line-height:1.3"><font size="6"><i>______________________________________________________________________________________________________________________________________________<br>
+		LOGICALL SARL - Siège Social : Les Reparons 17600 NANCRAS Tél : 05.46.94.46.46<br>
+		Bureaux Chateaubernard : 5bis Avenue d Angoulême 16100 Chateaubernard<br>
+		Tél: 05.45.809.809  -	N° Siret : 434142535 000 16 - Code NAF : 6201Z<br>';
+
+        // Page number
+	$this->WriteHTML($html, false, true, false, true, '');	
+	$this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+    }
+}
+
+
 
 class PluginPdfSimplePDF {
 
@@ -86,16 +118,16 @@ class PluginPdfSimplePDF {
          $font       = $_SESSION['glpipdffont'];
          //$subsetting = false;
       }
-      $pdf->setHeaderFont(Array($font, 'B', 8));
+      $pdf->setHeaderFont(Array($font, 'B', 12));
       $pdf->setFooterFont(Array($font, 'B', 8));
 
       //set margins
-      $pdf->SetMargins(10, 20, 10);
+      $pdf->SetMargins(10, 40, 10);
       $pdf->SetHeaderMargin(10);
-      $pdf->SetFooterMargin(10);
+      $pdf->SetFooterMargin(35);
 
       //set auto page breaks
-      $pdf->SetAutoPageBreak(true, 15);
+      $pdf->SetAutoPageBreak(true, 35);
 
 
       // For standard language
@@ -128,7 +160,7 @@ class PluginPdfSimplePDF {
             break;
 
          default :
-            $this->pdf->SetHeaderData('fd_logo.png', 15, $msg, '');
+            $this->pdf->SetHeaderData('fd_logo.png', 40, $msg, '');
       }
    }
 
