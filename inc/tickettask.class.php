@@ -53,7 +53,7 @@ class PluginPdfTicketTask extends PluginPdfCommon {
 
       $query = ['FROM'  => 'glpi_tickettasks',
                 'WHERE' => ['tickets_id' => $ID],
-                'ORDER' => 'date DESC'];
+                'ORDER' => 'date ASC'];
 
       if (!$private) {
          // Don't show private'
