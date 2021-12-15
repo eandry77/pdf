@@ -107,7 +107,7 @@ class PluginPdfSimplePDF {
       }
       $format = strtoupper($format);
 
-      $pdf = new TCPDF($orient, 'mm', $format, true, 'UTF-8', false);
+      $pdf = new MYPDF($orient, 'mm', $format, true, 'UTF-8', false);
 
       $pdf->SetCreator('GLPI');
       $pdf->SetAuthor('GLPI');
