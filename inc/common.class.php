@@ -120,11 +120,11 @@ abstract class PluginPdfCommon extends CommonGLPI {
    **/
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-      if (Session::haveRight('plugin_pdf', READ)) {
-         if (!isset($withtemplate) || empty($withtemplate)) {
-            return __('Print to pdf', 'pdf');
-         }
-      }
+    //  if (Session::haveRight('plugin_pdf', READ)) {
+    //     if (!isset($withtemplate) || empty($withtemplate)) {
+    //        return __('Print to pdf', 'pdf');
+    //     }
+    //  }
    }
 
 
@@ -249,7 +249,7 @@ abstract class PluginPdfCommon extends CommonGLPI {
             PluginPdfItem_SoftwareVersion::pdfForItem($pdf, $item);
             break;
 
-         Case 'Domain_Item$1' :
+         case 'Domain_Item$1' :
             PluginPdfDomain_Item::pdfForItem($pdf, $item);
             break;
 
